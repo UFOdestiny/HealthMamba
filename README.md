@@ -1,7 +1,7 @@
 # HealthMamba
 
 **HealthMamba: An Uncertainty-aware Spatiotemporal Graph State Space Model for Effective and Reliable Healthcare Facility Visit Prediction**  
-Health facility visit prediction is essential for understanding population health behaviors, optimizing healthcare resource allocation, and guiding public health policy. Despite advanced machine learning models being employed to improve prediction performance, existing approaches rarely consider fine-grained types of health facilities and often suffer performance degradation during public emergencies such as pandemics.
+Health facility visit prediction is essential for understanding population health behaviors, optimizing healthcare resource allocation, and guiding public health policy. Despite advanced machine learning methods being employed to improve the prediction performance, existing works usually formulate it as a time-series forecasting problem without capturing the intrinsic spatial dependencies of different types of health facilities, and they fail to provide reliable predictions under abnormal situations such as public emergencies. 
 
 To address these limitations, we propose **HealthMamba**, a spatiotemporal framework for accurate and reliable health facility visit prediction. HealthMamba comprises three key components:
 1.  **Unified Spatiotemporal Context Encoder**: Fuses heterogeneous static and dynamic information.
@@ -24,15 +24,17 @@ We conduct experiments on an Quad-Core 2.40GHz – Intel® Xeon X3220, 64 GB RAM
 
 ## 📊 Baselines  
 
-The baselines are inplemented based on [STGCN](https://github.com/hazdzz/STGCN),
+The baselines are inplemented based on
 [DCRNN](https://github.com/chnsh/DCRNN_PyTorch), 
+[STGCN](https://github.com/hazdzz/STGCN),
+[AGCRN](https://github.com/LeiBAI/AGCRN),
 [DGCRN](https://github.com/wengwenchao123/DDGCRN), 
-[DSTAGNN](https://github.com/SYLan2019/DSTAGNN), 
 [UQGNN](https://github.com/UFOdestiny/UQGNN), 
+[DSTAGNN](https://github.com/SYLan2019/DSTAGNN), 
 [ASTGCN](https://github.com/guoshnBJTU/ASTGCN-2019-pytorch), 
 [GluonTS](https://github.com/awslabs/gluonts), 
 [PatchTST](https://github.com/yuqinie98/PatchTST), 
 [ST-LLM](https://github.com/ChenxiLiu-HNU/ST-LLM), 
 [UrbanGPT](https://github.com/HKUDS/UrbanGPT), 
-[Mamba](https://github.com/state-spaces/mamba), 
-[U-Mamba](https://github.com/bowang-lab/U-Mamba), and [AGCRN](https://github.com/LeiBAI/AGCRN).
+[Mamba](https://github.com/state-spaces/mamba), and
+[U-Mamba](https://github.com/bowang-lab/U-Mamba).
