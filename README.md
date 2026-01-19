@@ -1,6 +1,6 @@
 # HealthMamba
 
-**HealthMamba: Uncertainty Quantification of Mamba for Multivariate Spatiotemporal Prediction**  
+**HealthMamba: An Uncertainty-aware Spatiotemporal Graph State Space Model for Effective and Reliable Healthcare Facility Visit Prediction**  
 Health facility visit prediction is essential for understanding population health behaviors, optimizing healthcare resource allocation, and guiding public health policy. Despite advanced machine learning models being employed to improve prediction performance, existing approaches rarely consider fine-grained types of health facilities and often suffer performance degradation during public emergencies such as pandemics.
 
 To address these limitations, we propose **HealthMamba**, a spatiotemporal framework for accurate and reliable health facility visit prediction. HealthMamba comprises three key components:
