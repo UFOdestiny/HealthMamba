@@ -9,7 +9,6 @@ import numpy as np
 
 sys.path.append(os.path.abspath(__file__ + "/../../../../"))
 sys.path.append(os.path.abspath(__file__ + "/../../"))
-sys.path.append("/home/dy23a.fsu/st/")
 
 from utils.args import get_data_path
 
@@ -261,11 +260,11 @@ def generate_data_and_idx(df, x_offsets, y_offsets, add_time_of_day, add_day_of_
 
 
 def generate_flow(args):
-    # data_path = "D:/OneDrive - Florida State University/datasets/shenzhen/shenzhen_1h/values_in.npy"
-    # data_path = "D:/OneDrive - Florida State University/datasets/nyc/flow.npy"
-    # data_path = "/blue/gtyson.fsu/dy23a.fsu/datasets/safegraph/pattern/panhandle.npy"
+    # data_path = "./data/shenzhen/shenzhen_1h/values_in.npy"
+    # data_path = "./data/nyc/flow.npy"
+    # data_path = "./data/safegraph/pattern/panhandle.npy"
 
-    data_path = "/blue/gtyson.fsu/dy23a.fsu/datasets/safegraph/tx/flow_tx.npy"
+    data_path = "./data/safegraph/tx/flow_tx.npy"
 
     # N * D * T
     data = np.load(data_path)
@@ -322,13 +321,13 @@ def generate_od(args):
     x_offsets = np.arange(-(seq_length_x - 1), 1, 1)
     y_offsets = np.arange(1, (seq_length_y + 1), 1)
 
-    data_path = "/blue/gtyson.fsu/dy23a.fsu/switch/nyc/taxi.npy"
-    data_path = "/blue/gtyson.fsu/dy23a.fsu/switch/nyc/bike.npy"
-    # data_path = "/blue/gtyson.fsu/dy23a.fsu/switch/nyc/subway.npy"
+    data_path = "./data/switch/nyc/taxi.npy"
+    data_path = "./data/switch/nyc/bike.npy"
+    # data_path = "./data/switch/nyc/subway.npy"
 
-    # data_path = "/blue/gtyson.fsu/dy23a.fsu/switch/shenzhen/taxi.npy"
-    # data_path2 = "/blue/gtyson.fsu/dy23a.fsu/switch/shenzhen/dd.npy"
-    # data_path3 = "/blue/gtyson.fsu/dy23a.fsu/switch/shenzhen/bike.npy"
+    # data_path = "./data/switch/shenzhen/taxi.npy"
+    # data_path2 = "./data/switch/shenzhen/dd.npy"
+    # data_path3 = "./data/switch/shenzhen/bike.npy"
 
     data = np.load(data_path)
     data = data.transpose(2, 0, 1)  # [..., np.newaxis]
@@ -383,13 +382,13 @@ def generate_od_2(args):
     x_offsets = np.arange(-(seq_length_x - 1), 1, 1)
     y_offsets = np.arange(1, (seq_length_y + 1), 1)
 
-    # data_path1 = "/blue/gtyson.fsu/dy23a.fsu/switch/shenzhen/subway_.npy"
-    # data_path2 = "/blue/gtyson.fsu/dy23a.fsu/switch/shenzhen/bike.npy"
+    # data_path1 = "./data/switch/shenzhen/subway_.npy"
+    # data_path2 = "./data/switch/shenzhen/bike.npy"
     # data = np.load(data_path1).transpose(2, 0, 1)[:672,...]
     # data_2 = np.load(data_path2).transpose(2, 0, 1)[:672,...]
 
-    data_path1 = "/blue/gtyson.fsu/dy23a.fsu/switch/nyc/subway.npy"
-    data_path2 = "/blue/gtyson.fsu/dy23a.fsu/switch/nyc/bike.npy"
+    data_path1 = "./data/switch/nyc/subway.npy"
+    data_path2 = "./data/switch/nyc/bike.npy"
     data = np.load(data_path1).transpose(2, 0, 1)
     data_2 = np.load(data_path2).transpose(2, 0, 1)
 

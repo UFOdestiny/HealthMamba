@@ -45,12 +45,12 @@ def get_public_config():
 # 系统路径配置
 _SYSTEM_CONFIG = {
     "linux": {
-        "log_base": "/home/dy23a.fsu/st/result",
-        "data_base": "/blue/gtyson.fsu/dy23a.fsu/datasets",
+        "log_base": "./result",
+        "data_base": "./data",
     },
     "windows": {
-        "log_base": r"E:/OneDrive - Florida State University/mycode/PopST/result",
-        "data_base": r"E:/OneDrive - Florida State University/mycode/POPST/dataset",
+        "log_base": "./result",
+        "data_base": "./data",
     },
 }
 

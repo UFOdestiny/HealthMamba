@@ -41,14 +41,14 @@ def get_adjacency_matrix(distance_df, sensor_ids, normalized_k=0.1):
 
 def read_map(dataset, year):
     df = gpd.read_file(
-        f"/home/dy23a.fsu/jupyuter/safegraph/file/tl_{year}_us_county.zip"
+        f"./data/tl_{year}_us_county.zip"
     )
     state_code = {"fl": "12", "tx": "48", "ny": "36", "ca": "06"}
     return df[df["STATEFP"] == state_code[dataset]].sort_values(by="GEOID").reset_index(drop=True)
 
 
 if __name__ == "__main__":
-    # json_path = "D:/FSU OneDrive/OneDrive - Florida State University/datasets/nyc/NYC Taxi Zones.geojson"
+    # json_path = "./data/nyc/NYC Taxi Zones.geojson"
     # save_path = "./nyc/adj.npy"
     #
     # gdf = geopandas.GeoDataFrame.from_file(json_path)
@@ -69,8 +69,8 @@ if __name__ == "__main__":
     # np.save(save_path, adj_mx)
 
     """
-    json_path = "/home/dy23a.fsu/jupyuter/safegraph/file/map_fl_2018.parquet"
-    save_path = "/blue/gtyson.fsu/dy23a.fsu/datasets/panhandle/adj.npy"
+    json_path = "./data/map_fl_2018.parquet"
+    save_path = "./data/panhandle/adj.npy"
     gdf =pd.read_parquet(json_path)
     gdf=gdf[gdf["COUNTYFP"].isin(["005","013","033","037","039","045","059","063","065","073","077","079","091","113","123","129","131","133"])]
     gdf = gpd.GeoDataFrame(gdf)
@@ -88,7 +88,7 @@ if __name__ == "__main__":
     np.save(save_path, adj_mx)
     """
 
-    # json_path = "D:/OneDrive - Florida State University/datasets/nyc/taxi/NYC Taxi Zones.geojson"
+    # json_path = "./data/nyc/taxi/NYC Taxi Zones.geojson"
     # save_path = "//data/manhattan/adj.npy"
 
     # gdf = geopandas.GeoDataFrame.from_file(json_path)
@@ -109,7 +109,7 @@ if __name__ == "__main__":
 
     for db in ["fl","ny","ca","tx",]:
         gdf=read_map(db,2018)
-        save_path = f"/blue/gtyson.fsu/dy23a.fsu/datasets/safegraph_{db}/adj.npy"
+        save_path = f"./data/safegraph_{db}/adj.npy"
         gdf = gdf.set_geometry("geometry").sort_values(by="GEOID")
         ctr = gdf.centroid.reset_index(drop=True)
         N = len(ctr)

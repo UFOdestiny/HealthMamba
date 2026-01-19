@@ -1,4 +1,4 @@
-#!/blue/gtyson.fsu/dy23a.fsu/conda/envs/st/bin/python3
+#!/usr/bin/env python3
 import os
 import glob
 import re
@@ -183,25 +183,25 @@ if __name__ == "__main__":
     select_metric = "MAE"  # 可选: "MAE", "RMSE", "MPIW", "IS", "COV" 等
 
     datasets = ["safegraph_fl"]
-    path = "/home/dy23a.fsu/st/result/fl"
+    path = "./result/fl"
     print_df(names, datasets, metrics, path, select_metric)
-    path = "/home/dy23a.fsu/st/result/mfl"
+    path = "./result/mfl"
     print_df(names, datasets, metrics, path, select_metric)
 
     datasets = ["safegraph_ny"]
-    path = "/home/dy23a.fsu/st/result/ny"
+    path = "./result/ny"
     print_df(names, datasets, metrics, path, select_metric)
-    path = "/home/dy23a.fsu/st/result/mny"
+    path = "./result/mny"
     print_df(names, datasets, metrics, path, select_metric)
 
     datasets = ["safegraph_ca"]
-    path = "/home/dy23a.fsu/st/result/ca"
+    path = "./result/ca"
     print_df(names, datasets, metrics, path, select_metric)
-    path = "/home/dy23a.fsu/st/result/mca"
+    path = "./result/mca"
     print_df(names, datasets, metrics, path, select_metric)
 
     datasets = ["safegraph_tx"]
-    path = "/home/dy23a.fsu/st/result/tx"
+    path = "./result/tx"
     print_df(names, datasets, metrics, path, select_metric)
-    path = "/home/dy23a.fsu/st/result/mtx"
+    path = "./result/mtx"
     print_df(names, datasets, metrics, path, select_metric)
