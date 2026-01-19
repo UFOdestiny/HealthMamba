@@ -27,7 +27,6 @@ We conduct experiments on an Quad-Core 2.40GHz – Intel® Xeon X3220, 64 GB RAM
 The baselines are inplemented based on [STGCN](https://github.com/hazdzz/STGCN),
 [DCRNN](https://github.com/chnsh/DCRNN_PyTorch), 
 [DGCRN](https://github.com/wengwenchao123/DDGCRN), 
-[StemGNN](https://github.com/microsoft/StemGNN), 
 [DSTAGNN](https://github.com/SYLan2019/DSTAGNN), 
 [UQGNN](https://github.com/UFOdestiny/UQGNN), 
 [ASTGCN](https://github.com/guoshnBJTU/ASTGCN-2019-pytorch), 
