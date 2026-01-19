@@ -199,7 +199,6 @@ class DataLoader_MPGCN(object):
 
 
 def construct_dyn_G(OD_data: np.array, perceived_period: int = 6):
-    """Construct dynamic graphs based on OD history using vectorized cosine distance."""
 
     train_len = int(OD_data.shape[0] * 0.8)
     num_periods_in_history = train_len // perceived_period
@@ -211,7 +210,7 @@ def construct_dyn_G(OD_data: np.array, perceived_period: int = 6):
             axis=-1
         )
 
-        # Vectorized cosine distance computation
+                                                
         O_G_t = distance.cdist(OD_t_avg, OD_t_avg, metric="cosine")
         D_G_t = distance.cdist(OD_t_avg.T, OD_t_avg.T, metric="cosine")
 
@@ -258,11 +257,11 @@ def load_adj_from_numpy(numpy_file):
 
 
 def get_dataset_info(dataset):
-    # base_dir = os.getcwd() + '/data/'
+                                       
     base_dir = get_data_path()
 
     d = {
-        # Flow Prediction: N -> N
+                                 
         "Shenzhen": [base_dir + "shenzhen", base_dir + "shenzhen/adj.npy", 491],
         "Shenzhen2": [base_dir + "shenzhen2", base_dir + "shenzhen2/adj.npy", 491],
         "NYC": [base_dir + "nyc", base_dir + "nyc/adj.npy", 67],
@@ -286,7 +285,7 @@ def get_dataset_info(dataset):
         "safegraph_tx": [base_dir + "safegraph_tx", base_dir + "safegraph_tx/adj.npy", 254],
         "safegraph_ny": [base_dir + "safegraph_ny", base_dir + "safegraph_ny/adj.npy", 62],
 
-        # OD Prediction: N*N -> N*N
+                                   
         "sz_taxi_od": [base_dir + "sz_taxi_od", base_dir + "shenzhen/adj.npy", 491],
         "sz_bike_od": [base_dir + "sz_bike_od", base_dir + "shenzhen/adj.npy", 491],
         "sz_subway_bike_od": [

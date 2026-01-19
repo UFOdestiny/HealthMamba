@@ -34,5 +34,5 @@ class QuantileRegressor(nn.Module):
         y_lower = self.conv_lower(X)
         y_median = self.conv_median(X)
         y_upper = self.conv_upper(X)
-        res= torch.cat([y_lower, y_median, y_upper], dim=1)  # [B,3,11,1]
+        res= torch.cat([y_lower, y_median, y_upper], dim=1)              
         return res

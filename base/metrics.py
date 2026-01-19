@@ -50,7 +50,7 @@ class Metrics:
         self._interval_with_target = {"WINK", "COV", "IS"}
         self._quantile_metric = {"Quantile"}
 
-        self.N = len(self.metric_lst)  # loss function
+        self.N = len(self.metric_lst)                 
         self.train_res = [[] for _ in range(self.N)]
         self.valid_res = [[] for _ in range(self.N)]
         self.test_res = [[] for _ in range(self.N)]
@@ -203,8 +203,8 @@ def get_mask(labels, null_val):
     else:
         mask = labels != null_val
     mask = mask.float()
-    # mask /= torch.mean(mask)
-    # mask = torch.where(torch.isnan(mask), torch.zeros_like(mask), mask)
+                              
+                                                                         
     return mask
 
 
@@ -239,7 +239,7 @@ def masked_rmse(preds, labels, null_val):
 
 
 def masked_mae(preds, labels, null_val):
-    # print("preds:", preds.shape, "labels:", labels.shape)
+                                                           
     assert preds.shape == labels.shape, f"preds: {preds.shape}, labels: {labels.shape}"
     loss = torch.abs(preds - labels)
     loss = get_mask_mean(loss, labels, null_val)
@@ -279,10 +279,6 @@ def masked_coverage(lower, upper, labels, alpha=None):
 
 
 def masked_IS(lower, upper, labels, alpha=0.1):
-    """
-    Compute Interval Score (Gneiting & Raftery) for a batch of predictions.
-    Handles non-contiguous tensors.
-    """
     lower = lower.reshape(-1)
     upper = upper.reshape(-1)
     labels = labels.reshape(-1)
@@ -305,10 +301,10 @@ def masked_nonconf(lower, upper, labels):
 
 
 def masked_mpiw_ens(preds, labels, null_val):
-    # mask = get_mask(labels, null_val)
+                                       
 
     m = torch.mean(preds, dim=list(range(1, preds.dim())))
-    # print(torch.min(preds),torch.quantile(m, 0.05),torch.mean(preds),torch.quantile(m, 0.95),torch.max(preds))
+                                                                                                                
 
     upper_bound = torch.quantile(m, 0.95)
     lower_bound = torch.quantile(m, 0.05)
@@ -316,7 +312,7 @@ def masked_mpiw_ens(preds, labels, null_val):
 
     return torch.mean(
         loss
-    )  # -torch.mean(torch.quantile(m, 0.8)-torch.quantile(m, 0.2))
+    )                                                              
 
 
 def compute_all_metrics(preds, labels, null_val, lower=None, upper=None):
@@ -431,8 +427,8 @@ def gaussian_nll_loss(preds, labels, null_val):
     var = torch.pow(scale, 2)
     loss = (labels - loc) ** 2 / var + torch.log(2 * torch.pi * var)
 
-    # pi = torch.acos(torch.zeros(1)).item() * 2
-    # loss = 0.5 * (torch.log(2 * torch.pi * var) + (torch.pow(labels - loc, 2) / var))
+                                                
+                                                                                       
 
     loss = loss * mask
     loss = torch.where(torch.isnan(loss), torch.zeros_like(loss), loss)
@@ -447,8 +443,8 @@ def laplace_nll_loss(preds, labels, null_val):
     loc, scale = preds
     loss = torch.log(2 * scale) + torch.abs(labels - loc) / scale
 
-    # d = torch.distributions.poisson.Poisson
-    # loss = d.log_prob(labels)
+                                             
+                               
 
     loss = loss * mask
     loss = torch.where(torch.isnan(loss), torch.zeros_like(loss), loss)
@@ -469,7 +465,7 @@ def mnormal_loss(preds, labels, null_val, scales):
         loss = loss * mask
         loss = torch.where(torch.isnan(loss), torch.zeros_like(loss), loss)
 
-    # loss = -torch.sum(loss)
+                             
     loss = -torch.mean(loss)
     return loss
 
@@ -552,7 +548,7 @@ def laplace_loss(preds, labels, null_val):
 
 
 def masked_crps(preds, labels, null_val):
-    _ = get_mask(labels, null_val)  # keep API for consistency
+    _ = get_mask(labels, null_val)                            
     preds_np = preds.detach().cpu().numpy()
     labels_np = labels.detach().cpu().numpy()
     loss = ps.crps_ensemble(labels_np, preds_np)

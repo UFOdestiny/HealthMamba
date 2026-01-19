@@ -10,7 +10,7 @@ def get_public_config():
     parser = argparse.ArgumentParser()
     parser.add_argument("--comment", type=str, default="")
 
-    parser.add_argument("--dataset", type=str, default="panhandle")  # NYC
+    parser.add_argument("--dataset", type=str, default="panhandle")       
     parser.add_argument("--years", type=str, default="2018")
     parser.add_argument("--model_name", type=str, default="")
 
@@ -19,7 +19,7 @@ def get_public_config():
     parser.add_argument("--horizon", type=int, default=3)
 
     parser.add_argument("--feature", type=int, default=4)
-    parser.add_argument("--input_dim", type=int, default=4)  # feature
+    parser.add_argument("--input_dim", type=int, default=4)           
     parser.add_argument("--output_dim", type=int, default=4)
 
     parser.add_argument("--max_epochs", type=int, default=2000)
@@ -42,7 +42,7 @@ def get_public_config():
     return parser
 
 
-# 系统路径配置
+                           
 _SYSTEM_CONFIG = {
     "linux": {
         "log_base": "./result",
@@ -86,8 +86,7 @@ def check_quantile(args, normal_model, quantile_model):
 
 
 def tuple_type(strings):
-    """将字符串转换为整数元组。支持格式: '1,2,3' 或 '(1,2,3)'"""
-    # 移除括号和空格
+                                       
     cleaned = re.sub(r"[()\\s]", "", strings)
     try:
         return tuple(map(int, cleaned.split(",")))

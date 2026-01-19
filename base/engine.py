@@ -53,7 +53,7 @@ class BaseEngine:
         self.model = model
         self.model.to(self._device)
 
-        # metric
+                
         if metric_list is None:
             metric_list = ["MAE", "MAPE", "RMSE", "KL", "CRPS"]
         self.metric = Metrics(self._loss_fn, metric_list, self.model.horizon)
@@ -69,7 +69,7 @@ class BaseEngine:
             f"Model Save Path: {os.path.join(self._save_path, self._time_model)}"
         )
 
-        # quantile
+                  
         self.alpha = alpha
         self.lower_bound = self.alpha / 2
         self.upper_bound = 1 - self.alpha / 2
@@ -119,7 +119,7 @@ class BaseEngine:
     def save_model(self, save_path):
         if not os.path.exists(save_path):
             os.makedirs(save_path)
-        # filename = 'final_model_s{}.pt'.format(self._seed)
+                                                            
         filename = self._time_model
         torch.save(self.model.state_dict(), os.path.join(save_path, filename))
 
@@ -158,7 +158,7 @@ class BaseEngine:
                 )
             self._optimizer.zero_grad()
 
-            # X (b, t, n, f), label (b, t, n, 1)
+                                                
             X, label = self._prepare_batch([X, label])
             pred = self._predict(X, label=label, iter=self._iter_cnt)
 
@@ -311,19 +311,19 @@ class BaseEngine:
                 self.save_result(preds, labels)
 
     def save_result(self, preds, labels):
-        # preds: (B, T, N, F)
-        # labels: (B, T, N, F)
+                             
+                              
 
         if preds.ndim != 4 or labels.ndim != 4:
             raise ValueError(
                 f"Input must be 4D. Got preds {preds.shape}, labels {labels.shape}"
             )
 
-        # 5D: (1, B, T, N, F)
+                             
         preds = preds.unsqueeze(0)
         labels = labels.unsqueeze(0)
 
-        # → (2, B, T, N, F)
+                           
         result = torch.cat([preds, labels], dim=0)
 
         result_np = result.cpu().numpy()
@@ -332,7 +332,7 @@ class BaseEngine:
         save_name = f"{base_name}.npy"
         path = os.path.join(self._save_path, save_name)
         
-        # 如果文件已存在，添加后缀 _1, _2, _3 ...
+                                                      
         suffix = 1
         while os.path.exists(path):
             save_name = f"{base_name}_{suffix}.npy"

@@ -6,7 +6,6 @@ from mamba_ssm import Mamba
 
 
 class MambaBlock(nn.Module):
-    """Residual Mamba block with lightweight normalization."""
 
     def __init__(self, d_model, dropout):
         super().__init__()
@@ -30,10 +29,10 @@ class myMamba(BaseModel):
         self.depth = max(1, depth)
         self.dropout = dropout
 
-        # project F → d_model
+                             
         self.input_proj = nn.Linear(self.feature, self.d_model)
 
-        # U-Net style encoder/decoder built from residual Mamba blocks
+                                                                      
         self.encoder_stages = nn.ModuleList(
             [self._build_stage() for _ in range(self.depth)]
         )
@@ -62,10 +61,10 @@ class myMamba(BaseModel):
 
         self.bottleneck_stage = self._build_stage()
 
-        # project sequence length T → H
+                                       
         self.time_proj = nn.Linear(self.seq_len, self.horizon)
 
-        # project d_model → F
+                             
         self.output_proj = nn.Linear(self.d_model, self.feature)
 
     def _build_stage(self):
@@ -92,16 +91,16 @@ class myMamba(BaseModel):
         pad = target_len - current_len
         return F.pad(tensor, (0, 0, 0, pad))
 
-    def forward(self, x):  # (B, T, N, F)
+    def forward(self, x):                
         B, T, N, F = x.shape
 
-        # merge batch and nodes → treat each node independently
-        x = x.permute(0, 2, 1, 3).reshape(B * N, T, F)  # (B*N, T, F)
+                                                               
+        x = x.permute(0, 2, 1, 3).reshape(B * N, T, F)               
 
-        # feature projection
-        x = self.input_proj(x)  # (B*N, T, d_model)
+                            
+        x = self.input_proj(x)                     
 
-        # encoder
+                 
         skips = []
         for idx, stage in enumerate(self.encoder_stages):
             x = stage(x)
@@ -109,10 +108,10 @@ class myMamba(BaseModel):
                 skips.append(x)
                 x = self._apply_downsample(x, self.downsamples[idx])
 
-        # bottleneck
+                    
         x = self.bottleneck_stage(x)
 
-        # decoder with skip connections
+                                       
         for stage, upsample, proj in zip(
             reversed(self.decoder_stages),
             reversed(self.upsamples),
@@ -127,18 +126,18 @@ class myMamba(BaseModel):
             x = proj(x)
             x = stage(x)
 
-        # make sure sequence length matches the original input for downstream projection
+                                                                                        
         x = self._match_length(x, self.seq_len)
 
-        # project T → H
-        x = x.permute(0, 2, 1)  # (B*N, d_model, T)
-        x = self.time_proj(x)  # (B*N, d_model, H)
-        x = x.permute(0, 2, 1)  # (B*N, H, d_model)
+                       
+        x = x.permute(0, 2, 1)                     
+        x = self.time_proj(x)                     
+        x = x.permute(0, 2, 1)                     
 
-        # project feature back
-        x = self.output_proj(x)  # (B*N, H, F)
+                              
+        x = self.output_proj(x)               
 
-        # reshape back to (B, H, N, F)
+                                      
         x = x.reshape(B, N, self.horizon, F)
         x = x.permute(0, 2, 1, 3)
 
