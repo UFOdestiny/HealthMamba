@@ -1,9 +1,9 @@
 # HealthMamba
 
 **HealthMamba: An Uncertainty-aware Spatiotemporal Graph State Space Model for Effective and Reliable Healthcare Facility Visit Prediction**  
-Health facility visit prediction is essential for understanding population health behaviors, optimizing healthcare resource allocation, and guiding public health policy. Despite advanced machine learning methods being employed to improve the prediction performance, existing works usually formulate it as a time-series forecasting problem without capturing the intrinsic spatial dependencies of different types of health facilities, and they fail to provide reliable predictions under abnormal situations such as public emergencies. 
+Healthcare facility visit prediction is essential for understanding population health behaviors, optimizing healthcare resource allocation, and guiding public health policy. Despite advanced machine learning methods being employed to improve the prediction performance, existing works usually formulate it as a time-series forecasting problem without capturing the intrinsic spatial dependencies of different types of healthcare facilities, and they fail to provide reliable predictions under abnormal situations such as public emergencies. 
 
-To address these limitations, we propose **HealthMamba**, a spatiotemporal framework for accurate and reliable health facility visit prediction. HealthMamba comprises three key components:
+To address these limitations, we propose **HealthMamba**, a spatiotemporal framework for accurate and reliable healthcare facility visit prediction. HealthMamba comprises three key components:
 1.  **Unified Spatiotemporal Context Encoder**: Fuses heterogeneous static and dynamic information.
 2.  **GraphMamba**: A novel Graph State Space Model for hierarchical spatiotemporal modeling.
 3.  **Uncertainty Quantification Module**: Integrates three uncertainty quantification mechanisms for reliable prediction.
