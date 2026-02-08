@@ -5,52 +5,32 @@ import time
 from logging.handlers import RotatingFileHandler
 from contextlib import contextmanager
 
-                      
 LOG_FORMAT = "%(asctime)s - %(message)s"
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 LOG_LEVEL = logging.INFO
 
 
-def get_logger(log_dir: str, name: str, log_filename: str = None, level: int = LOG_LEVEL) -> logging.Logger:
-                          
+def get_logger(log_dir, name, log_filename=None, level=LOG_LEVEL):
     os.makedirs(log_dir, exist_ok=True)
-    
-                                                                              
     if log_filename is None:
         timestamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
         log_filename = f"{timestamp}.log"
-    else:
-        log_filename = f"{log_filename}.log" if not log_filename.endswith('.log') else log_filename
-    
-                          
+    elif not log_filename.endswith(".log"):
+        log_filename = f"{log_filename}.log"
     logger = logging.getLogger(name)
-    
-                                      
     if logger.handlers:
         return logger
-    
     logger.setLevel(level)
-    
-                      
     formatter = logging.Formatter(LOG_FORMAT, datefmt=DATE_FORMAT)
-    
-                                                             
     log_path = os.path.join(log_dir, log_filename)
     file_handler = RotatingFileHandler(
-        log_path,
-        maxBytes=10 * 1024 * 1024,        
-        backupCount=50,                   
-        encoding='utf-8'
+        log_path, maxBytes=10 * 1024 * 1024, backupCount=50, encoding="utf-8"
     )
     file_handler.setFormatter(formatter)
     file_handler.setLevel(level)
-    
-                     
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setFormatter(formatter)
     console_handler.setLevel(level)
-    
-                            
     logger.addHandler(file_handler)
     logger.addHandler(console_handler)
 
@@ -64,12 +44,9 @@ def get_logger(log_dir: str, name: str, log_filename: str = None, level: int = L
         finally:
             for h, f in zip(logger.handlers, old_formatters):
                 h.setFormatter(f)
-    
-    logger.no_time = no_time
 
+    logger.no_time = no_time
     with logger.no_time():
-        logger.info( "=" * 25 + "   Settings   " + "=" * 25 )
-                          
+        logger.info("=" * 25 + "   Settings   " + "=" * 25)
     logger.info(f"Log File Path: {log_path}")
-    
     return logger

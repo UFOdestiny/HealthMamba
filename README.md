@@ -1,40 +1,60 @@
 # HealthMamba
 
-**HealthMamba: An Uncertainty-aware Spatiotemporal Graph State Space Model for Effective and Reliable Healthcare Facility Visit Prediction**  
-Healthcare facility visit prediction is essential for understanding population health behaviors, optimizing healthcare resource allocation, and guiding public health policy. Despite advanced machine learning methods being employed to improve the prediction performance, existing works usually formulate it as a time-series forecasting problem without capturing the intrinsic spatial dependencies of different types of healthcare facilities, and they fail to provide reliable predictions under abnormal situations such as public emergencies. 
+**HealthMamba: An Uncertainty-aware Spatiotemporal Graph State Space Model for Effective and Reliable Healthcare Facility Visit Prediction**
 
-To address these limitations, we propose **HealthMamba**, a spatiotemporal framework for accurate and reliable healthcare facility visit prediction. HealthMamba comprises three key components:
-1.  **Unified Spatiotemporal Context Encoder**: Fuses heterogeneous static and dynamic information.
-2.  **GraphMamba**: A novel Graph State Space Model for hierarchical spatiotemporal modeling.
-3.  **Uncertainty Quantification Module**: Integrates three uncertainty quantification mechanisms for reliable prediction.
+HealthMamba is a spatiotemporal framework for accurate and reliable healthcare facility visit prediction. It comprises three key components:
 
-We evaluate HealthMamba on four large-scale real-world datasets from California, New York, Texas, and Florida. Results show that HealthMamba achieves approximately **6.0% improvement in prediction accuracy** and **3.5% improvement in uncertainty quantification** over state-of-the-art baselines.
+1. **Unified Spatiotemporal Context Encoder (STCE)**: Fuses heterogeneous visit data, static node attributes, and dynamic external factors through feature embedding, graph convolution for spatial encoding, and depthwise temporal convolution with channel mixing.
 
-## 🔧 Implementation Details
-We conduct experiments on an Quad-Core 2.40GHz – Intel® Xeon X3220, 64 GB RAM linux computing server, equipped with an NVIDIA RTX A100 GPU with 80 GB memory. We adopt PyTorch 2.3.0 and CUDA 11.8 as the default deep learning library.
+2. **GraphMamba Backbone (G-Mamba)**: A UNet-style architecture integrating adaptive graph learning into State Space Models. Each G-Mamba block performs adaptive graph learning, graph-enhanced spatial mixing, SSM-based temporal mixing, and channel mixing with residual connections. Multi-scale encoding/decoding with skip connections enables hierarchical spatiotemporal modeling.
 
-## 📁 Project Structure
+3. **Uncertainty-aware Prediction**: Combines three complementary uncertainty quantification mechanisms:
+   - **Node-based**: Quantile regression heads for prediction intervals (pinball loss)
+   - **Distribution-based**: Gaussian heteroscedastic heads for mean and variance (NLL loss)
+   - **Parameter-based**: MC Dropout for epistemic uncertainty estimation
+   - **Post-hoc calibration**: Conformal quantile calibration on a held-out set
+
+## Project Structure
 
 ```
-├── base/               # Fundamental model and engine
-├── src/flow/           # HealthMamba models
-├── utils/              # Configuration and dataloader
-└── README.md           # Project documentation
+HealthMamba_Code/
+├── model/
+│   ├── stce.py            # Unified Spatiotemporal Context Encoder
+│   ├── gmamba.py           # G-Mamba Block and GraphMamba UNet Backbone
+│   └── healthmamba.py      # Full HealthMamba model with uncertainty heads
+├── engine/
+│   ├── engine.py           # Training engine with unified loss
+│   └── metrics.py          # Evaluation metrics
+├── utils/
+│   ├── args.py             # Argument configuration
+│   ├── dataloader.py       # Data loading utilities
+│   ├── scaler.py           # Data normalization scalers
+│   ├── graph.py            # Graph normalization algorithms
+│   └── log.py              # Logger
+├── .gitignore
+├── LICENSE
+└── README.md
 ```
 
-## 📊 Baselines  
+## Implementation Details
 
-The baselines are inplemented based on
-[DCRNN](https://github.com/chnsh/DCRNN_PyTorch), 
+- PyTorch 2.3.0, CUDA 11.8
+- Mamba SSM (`mamba_ssm` package)
+- NVIDIA RTX A100 GPU (80 GB)
+
+## Baselines
+
+The baselines are implemented based on
+[DCRNN](https://github.com/chnsh/DCRNN_PyTorch),
 [STGCN](https://github.com/hazdzz/STGCN),
 [AGCRN](https://github.com/LeiBAI/AGCRN),
-[DGCRN](https://github.com/wengwenchao123/DDGCRN), 
-[UQGNN](https://github.com/UFOdestiny/UQGNN), 
-[DSTAGNN](https://github.com/SYLan2019/DSTAGNN), 
-[ASTGCN](https://github.com/guoshnBJTU/ASTGCN-2019-pytorch), 
-[GluonTS](https://github.com/awslabs/gluonts), 
-[PatchTST](https://github.com/yuqinie98/PatchTST), 
-[ST-LLM](https://github.com/ChenxiLiu-HNU/ST-LLM), 
-[UrbanGPT](https://github.com/HKUDS/UrbanGPT), 
+[DGCRN](https://github.com/wengwenchao123/DDGCRN),
+[UQGNN](https://github.com/UFOdestiny/UQGNN),
+[DSTAGNN](https://github.com/SYLan2019/DSTAGNN),
+[ASTGCN](https://github.com/guoshnBJTU/ASTGCN-2019-pytorch),
+[GluonTS](https://github.com/awslabs/gluonts),
+[PatchTST](https://github.com/yuqinie98/PatchTST),
+[ST-LLM](https://github.com/ChenxiLiu-HNU/ST-LLM),
+[UrbanGPT](https://github.com/HKUDS/UrbanGPT),
 [Mamba](https://github.com/state-spaces/mamba), and
 [U-Mamba](https://github.com/bowang-lab/U-Mamba).
